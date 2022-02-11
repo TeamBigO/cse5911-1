@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Setup
-    os.chdir(args.dir)
+    #os.chdir(args.dir)
     logging.info(f'Program Initializing...')
     logging.info(f'reading {args.input_xlsx}')
     print("Current Path: ", os.getcwd())
