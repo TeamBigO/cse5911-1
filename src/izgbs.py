@@ -5,6 +5,7 @@ import scipy.stats as st
 from statistics import mean
 from src.voter_sim import voter_sim
 
+# comment
 
 def voting_time_calcs(ballot_length: int, settings: dict) -> tuple:
     '''
