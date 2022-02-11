@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Setup
-    os.chdir(args.dir)
+    #os.chdir(args.dir)
     logging.info(f'Program Initializing...')
     logging.info(f'reading {args.input_xlsx}')
     print("Current Path: ", os.getcwd())
@@ -120,7 +120,8 @@ if __name__ == '__main__':
         voting_config.save(tmp_name)
         os.remove(args.input_xlsx)
         os.rename(tmp_name, args.input_xlsx)
-        os.system('start excel.exe ' + args.input_xlsx)
+        #os.system('start excel.exe ' + args.input_xlsx)
+        os.system('open ' + args.input_xlsx)
     except Exception as ex:
         logging.critical(f'runtime: {time.perf_counter()-start_time}')
         print('err: ', ex)

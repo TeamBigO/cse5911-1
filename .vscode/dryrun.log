@@ -1,0 +1,7 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/sarahzhang/CAPSTONE/cse5911-1'
+apportionment
+allocation
+ 
+make: Leaving directory `/Users/sarahzhang/CAPSTONE/cse5911-1'
+ 

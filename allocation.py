@@ -1,5 +1,3 @@
-
-
 import os
 import sys
 import xlrd
@@ -132,7 +130,8 @@ if __name__ == '__main__':
         voting_config.save(tmp_name)
         os.remove(args.input_xlsx)
         os.rename(tmp_name, args.input_xlsx)
-        os.system('start excel.exe ' + args.input_xlsx)
+        #os.system('start excel.exe ' + args.input_xlsx)
+        os.system('open ' + args.input_xlsx)
     except Exception as ex:
         logging.critical(f'runtime: {time.perf_counter()-start_time}')
         print('err: ', ex)

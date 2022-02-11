@@ -100,25 +100,32 @@ def izgbs(
         if key in memo:
             avg_wait_time_avg, max_wait_time_avg, max_wait_time_std = memo[key]
         else:
-            batch_avg_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
-            batch_max_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
+            import cProfile
+            with cProfile.Profile() as pr:
+            #pr = cProfile.Profile()
+            #pr.enable()
+                batch_avg_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
+                batch_max_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
 
-            # =====================================
+                # =====================================
 
-            # calculate voting times
-            for i in range(settings['NUM_REPLICATIONS']):
-                wait_times = voter_sim(
-                    max_voters=max_voters,
-                    expected_voters=expected_voters,
-                    vote_time_min=vote_min,
-                    vote_time_mode=vote_mode,
-                    vote_time_max=vote_max,
-                    num_machines=num_machines,
-                    settings=settings
-                )
+                # calculate voting times
+                for i in range(settings['NUM_REPLICATIONS']):
+                    wait_times = voter_sim(
+                        max_voters=max_voters,
+                        expected_voters=expected_voters,
+                        vote_time_min=vote_min,
+                        vote_time_mode=vote_mode,
+                        vote_time_max=vote_max,
+                        num_machines=num_machines,
+                        settings=settings
+                    )
 
-                batch_avg_wait_times[i % settings['NUM_BATCHES']].append(mean(wait_times))
-                batch_max_wait_times[i % settings['NUM_BATCHES']].append(max(wait_times))
+                    batch_avg_wait_times[i % settings['NUM_BATCHES']].append(mean(wait_times))
+                    batch_max_wait_times[i % settings['NUM_BATCHES']].append(max(wait_times))
+            #pr.disable()
+            pr.dump_stats('test_profile.prof')
+            exit()
 
             # =====================================
 
