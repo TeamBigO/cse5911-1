@@ -4,6 +4,7 @@ import numpy as np
 import scipy.stats as st
 from statistics import mean
 from src.voter_sim import voter_sim
+from src.AKPIp1 import AKPIp1
 
 
 def voting_time_calcs(ballot_length: int, settings: dict) -> tuple:
@@ -97,29 +98,35 @@ def izgbs(
         # NOTE: these all `should` be ints, so '10.0' vs '10' should not be a problem
         key = f'{max_voters},{expected_voters},{ballot_length},{num_machines}'
 
+        print('cp1')
         if key in memo:
+            print('cpif')
             avg_wait_time_avg, max_wait_time_avg, max_wait_time_std = memo[key]
         else:
+            print('cpelse')
             batch_avg_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
             batch_max_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
 
             # =====================================
 
+            print('cpizgbs')
             # calculate voting times
             for i in range(settings['NUM_REPLICATIONS']):
-                wait_times = voter_sim(
+                #print('cpizgbsforloop')
+                mean_is_higher, avg_wait, max_wait = AKPIp1(
+                    sas_alpha_value=sas_alpha_value,
                     max_voters=max_voters,
                     expected_voters=expected_voters,
-                    vote_time_min=vote_min,
-                    vote_time_mode=vote_mode,
-                    vote_time_max=vote_max,
+                    vote_min=vote_min,
+                    vote_mode=vote_mode,
+                    vote_max=vote_max,
                     num_machines=num_machines,
                     settings=settings
                 )
-
-                batch_avg_wait_times[i % settings['NUM_BATCHES']].append(mean(wait_times))
-                batch_max_wait_times[i % settings['NUM_BATCHES']].append(max(wait_times))
-
+                #print('cpizgbsloop')
+                batch_avg_wait_times[i % settings['NUM_BATCHES']].append(avg_wait)
+                batch_max_wait_times[i % settings['NUM_BATCHES']].append(max_wait)
+            print('cpizgbsend')
             # =====================================
 
             # reduce individual batches to their mean's
@@ -138,7 +145,7 @@ def izgbs(
             max_wait_time_std = np.std(max_wait_times)
 
             memo[key] = (avg_wait_time_avg, max_wait_time_avg, max_wait_time_std)
-
+        print('cp2')
         # populate results
         feasible_dict[num_machines]['BatchAvg'] = avg_wait_time_avg
         feasible_dict[num_machines]['BatchMaxAvg'] = max_wait_time_avg
