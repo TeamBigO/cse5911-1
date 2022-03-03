@@ -140,7 +140,6 @@ def AKPIp1(
     I_start_value = 1
     sample_average[I_start_value] = wait_time
 
-    print('akpimid')
     for j in vba_range(1, initial_sample):
         sample[j] = wait_time
 
