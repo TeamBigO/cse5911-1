@@ -72,12 +72,12 @@ def evaluate_location(inputs: tuple) -> dict:
 
         loc_res_min = loc_res[min_index]
 
-        best_result['AResource'] = loc_res_min['Machines']
-        best_result['BExp. Avg. Wait Time'] = loc_res_min['BatchAvg']
-        best_result['CExp. Max. Wait Time'] = loc_res_min['BatchMaxAvg']
-        best_result['DAKPI Check AVG'] = avg_wait1
-        best_result['EAKPI Check MAX'] = max_wait1
-        best_result['FAKPI ALT AVG'] = avg_wait2
-        best_result['GAKPI ALT MAX'] = max_wait2
+        best_result['Resource'] = loc_res_min['Machines']
+        best_result['Exp. Avg. Wait Time'] = loc_res_min['BatchAvg']
+        best_result['Exp. Max. Wait Time'] = loc_res_min['BatchMaxAvg']
+        best_result['AKPI Check AVG'] = avg_wait1
+        best_result['AKPI Check MAX'] = max_wait1
+        best_result['AKPI ALT AVG'] = avg_wait2
+        best_result['AKPI ALT MAX'] = max_wait2
 
     return best_result
