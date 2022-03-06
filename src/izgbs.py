@@ -4,6 +4,7 @@ import numpy as np
 import scipy.stats as st
 from statistics import mean
 from src.voter_sim import voter_sim
+from src.AKPIp1 import AKPIp1
 
 
 def voting_time_calcs(ballot_length: int, settings: dict) -> tuple:
@@ -174,5 +175,37 @@ def izgbs(
         hypotheses_remain = cur_lower < cur_upper and cur_lower < num_machines < cur_upper
 
     logging.info(feasible_dict)
+
+    print('Verifying results using AKPI...')
+
+    mean_is_higher1, avg_wait1, max_wait1 = AKPIp1(
+        sas_alpha_value=sas_alpha_value,
+        max_voters=max_voters,
+        expected_voters=expected_voters,
+        vote_min=vote_min,
+        vote_mode=vote_mode,
+        vote_max=vote_max,
+        num_machines=num_machines+1,
+        settings=settings
+    )
+
+    print(num_machines+1, ' Machines: ')
+    print('Average Wait Time: ', avg_wait1)
+    print('Max Wait Time: ', max_wait1)
+
+    mean_is_higher2, avg_wait2, max_wait2 = AKPIp1(
+        sas_alpha_value=sas_alpha_value,
+        max_voters=max_voters,
+        expected_voters=expected_voters,
+        vote_min=vote_min,
+        vote_mode=vote_mode,
+        vote_max=vote_max,
+        num_machines=num_machines,
+        settings=settings
+    )
+
+    print(num_machines, ' Machines: ')
+    print('Average Wait Time: ', avg_wait2)
+    print('Max Wait Time: ', max_wait2)
 
     return feasible_dict
