@@ -78,7 +78,7 @@ def izgbs(
             'Machines': num_m + 1,
             'Feasible': 0,
             'BatchAvg': 0,
-            'BatchMaxAvg': 0
+            'BatchMaxAvg': 0,
         }
         for num_m in range(min_machines, max_machines)
     }
@@ -176,7 +176,7 @@ def izgbs(
 
     logging.info(feasible_dict)
 
-    print('Verifying results using AKPI...')
+    print('Verifying results for', location_data, ' using AKPI...')
 
     mean_is_higher1, avg_wait1, max_wait1 = AKPIp1(
         sas_alpha_value=sas_alpha_value,
@@ -189,10 +189,6 @@ def izgbs(
         settings=settings
     )
 
-    print(num_machines+1, ' Machines: ')
-    print('Average Wait Time: ', avg_wait1)
-    print('Max Wait Time: ', max_wait1)
-
     mean_is_higher2, avg_wait2, max_wait2 = AKPIp1(
         sas_alpha_value=sas_alpha_value,
         max_voters=max_voters,
@@ -204,8 +200,13 @@ def izgbs(
         settings=settings
     )
 
+    print('---------------------')
+    print(num_machines+1, ' Machines: ')
+    print('Average Wait Time: ', avg_wait1)
+    print('Max Wait Time: ', max_wait1)
     print(num_machines, ' Machines: ')
     print('Average Wait Time: ', avg_wait2)
     print('Max Wait Time: ', max_wait2)
+    print('---------------------')
 
-    return feasible_dict
+    return feasible_dict, num_machines, avg_wait1, max_wait1, avg_wait2, max_wait2

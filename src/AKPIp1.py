@@ -110,7 +110,6 @@ def AKPIp1(
         # TODO
     '''
     # Step 0. Setup
-    print('cpakpistart')
     initial_sample = settings['INITIAL_SAMPLE_SIZE']
     wait_time = settings['SERVICE_REQ']
     delta_IZ = settings['DELTA_INDIFFERENCE_ZONE']
