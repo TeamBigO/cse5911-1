@@ -95,7 +95,7 @@ def default_settings():
         'MAX_MACHINES': 200,
         'MIN_MACHINES': 1,
 
-        'SERVICE_REQ': 30.0,
+        'SERVICE_REQ': 65.0,
 
         'MIN_VOTING_MIN': 6,
         'MIN_VOTING_MODE': 8,
