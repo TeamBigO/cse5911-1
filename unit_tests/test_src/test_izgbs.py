@@ -3,13 +3,13 @@ import pytest
 from src.settings import default_settings
 from src.izgbs import izgbs, voting_time_calcs
 
-
+#good
 def test_voting_time_calcs_default1():
     _min, _mode, _max = voting_time_calcs(10, default_settings())
 
     assert _min == 6 and _mode == 10 and _max == 20
 
-
+#this will take a while due to the checks. the dict before settings is the location data. #are the eligible voters not backwards?
 def test_izgbs_full_run1():
     settings = default_settings()
 
@@ -18,16 +18,16 @@ def test_izgbs_full_run1():
         100,
         1,
         {
-            'Eligible Voters': 100,
-            'Likely or Exp. Voters': 200,
+            'Eligible Voters': 1000,
+            'Likely or Exp. Voters': 2000,
             'Ballot Length Measure': 10
         },
         settings
     )
+    #modified to add [0]. also added a 0 to both eligible voters and likely voters. 
+    assert type(results[0]) == dict
 
-    assert type(results) == dict
-
-
+#added 0 to end of numbers of voters.
 def test_izgbs_atleast_one_feasible():
     settings = default_settings()
 
@@ -36,14 +36,14 @@ def test_izgbs_atleast_one_feasible():
         100,
         1,
         {
-            'Eligible Voters': 100,
-            'Likely or Exp. Voters': 200,
+            'Eligible Voters': 1000,
+            'Likely or Exp. Voters': 2000,
             'Ballot Length Measure': 10
         },
         settings
     )
 
-    assert any(v['Feasible'] for v in results.values())
+    assert any(v['Feasible'] for v in results[0].values())
 
 
 def test_izgbs_no_infeasible_after_first_feasible():
@@ -54,14 +54,14 @@ def test_izgbs_no_infeasible_after_first_feasible():
         100,
         1,
         {
-            'Eligible Voters': 100,
-            'Likely or Exp. Voters': 200,
+            'Eligible Voters': 1000,
+            'Likely or Exp. Voters': 2000,
             'Ballot Length Measure': 10
         },
         settings
     )
 
-    results = list(results.values())
+    results = list(results[0].values())
     first_feasible = None
 
     for i, res in enumerate(results):
@@ -71,14 +71,14 @@ def test_izgbs_no_infeasible_after_first_feasible():
 
     assert all(res['Feasible'] for res in results[first_feasible:])
 
-
+#this one is taking a long time. was (1,2,3)
 def test_izgbs_can_return_all_infeasible():
     settings = default_settings()
 
     results = izgbs(
-        3,
-        2,
-        1,
+        27,
+        25,
+        23,
         {
             'Eligible Voters': 10000,
             'Likely or Exp. Voters': 20000,
@@ -87,18 +87,19 @@ def test_izgbs_can_return_all_infeasible():
         settings
     )
 
-    assert not any(v['Feasible'] for v in results.values())
+    assert not any(v['Feasible'] for v in results[0].values())
 
-
+#this one will also take a long long time.
+#was 4, 3, 1
 def test_izgbs_all_feasible_with_inf_service_req():
     settings = default_settings()
 
     settings['SERVICE_REQ'] = float('inf')
 
     results = izgbs(
-        4,
-        3,
-        1,
+        27,
+        25,
+        23,
         {
             'Eligible Voters': 10000,
             'Likely or Exp. Voters': 20000,
@@ -107,7 +108,7 @@ def test_izgbs_all_feasible_with_inf_service_req():
         settings
     )
 
-    assert all(v['Feasible'] for v in results.values())
+    assert all(v['Feasible'] for v in results[0].values())
 
 
 def test_izgbs_feasible_dict_size_determined_by_num_machines():
@@ -127,7 +128,7 @@ def test_izgbs_feasible_dict_size_determined_by_num_machines():
         settings
     )
 
-    assert len(results) == upper - lower
+    assert len(results[0]) == upper - lower
 
 
 def test_izgbs_feasible_dict_contains_correct_machine_nums():
@@ -147,7 +148,7 @@ def test_izgbs_feasible_dict_contains_correct_machine_nums():
         settings
     )
 
-    assert list(results.keys()) == [*range(lower + 1, upper + 1)]
+    assert list(results[0].keys()) == [*range(lower + 1, upper + 1)]
 
 
 def test_izgbs_bad_start_raises_1():

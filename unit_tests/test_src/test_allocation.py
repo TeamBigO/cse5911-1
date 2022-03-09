@@ -1,7 +1,7 @@
 from src.settings import default_settings
 from allocation import allocation
 
-
+#chnaged likely/elg voters from 50 and 100 to 1000 and 2000. changed num machines to 50 from 10
 def test_allocation_runs_without_error():
     settings = default_settings()
     settings['NUM_LOCATIONS'] = 2
@@ -28,7 +28,7 @@ def test_allocation_runs_without_error():
 
     assert type(result) is dict
 
-
+#100 and 200 were middle ones
 def test_allocation_equal_for_equal_locations():
     settings = default_settings()
     settings['NUM_LOCATIONS'] = 2
@@ -56,6 +56,7 @@ def test_allocation_equal_for_equal_locations():
     assert result[1]['Resource'] == result[2]['Resource']
 
 
+#50 and 100
 def test_allocation_uses_expected_num_machines():
     settings = default_settings()
     settings['NUM_LOCATIONS'] = 2
