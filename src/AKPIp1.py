@@ -95,15 +95,13 @@ def vba_range(start: int, stop: int) -> Generator:
 
 
 def AKPIp1(
-    *,
-    sas_alpha_value,
-
-    max_voters,
-    expected_voters,
-    vote_min,
-    vote_mode,
-    vote_max,
-    num_machines,
+    sas_alpha_value: float,
+    max_voters: int,
+    expected_voters: int,
+    vote_min: int,
+    vote_mode: int,
+    vote_max: int,
+    num_machines: int,
     settings: dict
 ):
     '''
