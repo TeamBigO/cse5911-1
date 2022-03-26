@@ -19,7 +19,7 @@ def evaluate_location(inputs: tuple) -> dict:
 
     start_val = math.ceil((settings['MAX_MACHINES'] - 1) / 2)
 
-    loc_res = izgbs(
+    loc_res, num_machines, avg_wait1, max_wait1, avg_wait2, max_wait2 = izgbs(
         settings['MAX_MACHINES'],
         start_val,
         settings['MIN_MACHINES'],
@@ -56,6 +56,10 @@ def evaluate_location(inputs: tuple) -> dict:
         best_result['Resource'] = mach_min
         best_result['Exp. Avg. Wait Time'] = loc_feas_min['BatchAvg']
         best_result['Exp. Max. Wait Time'] = loc_feas_min['BatchMaxAvg']
+        best_result['AKPI Check AVG'] = avg_wait1
+        best_result['AKPI Check MAX'] = max_wait1
+        best_result['AKPI ALT AVG'] = avg_wait2
+        best_result['AKPI ALT MAX'] = max_wait2
 
     else:
         # no feasible setups, find lowest wait time (should work out to be max machines allowed)
@@ -71,5 +75,9 @@ def evaluate_location(inputs: tuple) -> dict:
         best_result['Resource'] = loc_res_min['Machines']
         best_result['Exp. Avg. Wait Time'] = loc_res_min['BatchAvg']
         best_result['Exp. Max. Wait Time'] = loc_res_min['BatchMaxAvg']
+        best_result['AKPI Check AVG'] = avg_wait1
+        best_result['AKPI Check MAX'] = max_wait1
+        best_result['AKPI ALT AVG'] = avg_wait2
+        best_result['AKPI ALT MAX'] = max_wait2
 
     return best_result

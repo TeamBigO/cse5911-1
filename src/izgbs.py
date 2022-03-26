@@ -4,6 +4,7 @@ import numpy as np
 import scipy.stats as st
 from statistics import mean
 from src.voter_sim import voter_sim
+from src.AKPIp1 import AKPIp1
 
 
 def voting_time_calcs(ballot_length: int, settings: dict) -> tuple:
@@ -77,7 +78,7 @@ def izgbs(
             'Machines': num_m + 1,
             'Feasible': 0,
             'BatchAvg': 0,
-            'BatchMaxAvg': 0
+            'BatchMaxAvg': 0,
         }
         for num_m in range(min_machines, max_machines)
     }
@@ -175,4 +176,43 @@ def izgbs(
 
     logging.info(feasible_dict)
 
-    return feasible_dict
+    print('Verifying results for', location_data, ' using AKPI...')
+
+    mean_is_higher1, avg_wait1, max_wait1 = AKPIp1(
+        sas_alpha_value=sas_alpha_value,
+        max_voters=max_voters,
+        expected_voters=expected_voters,
+        vote_min=vote_min,
+        vote_mode=vote_mode,
+        vote_max=vote_max,
+        num_machines=num_machines+1,
+        settings=settings
+    )
+
+    print(num_machines+1, ' Machines: ')
+    print('Average Wait Time: ', avg_wait1)
+    print('Max Wait Time: ', max_wait1)
+
+    if num_machines != 1 :
+        mean_is_higher2, avg_wait2, max_wait2 = AKPIp1(
+            sas_alpha_value=sas_alpha_value,
+            max_voters=max_voters,
+            expected_voters=expected_voters,
+            vote_min=vote_min,
+            vote_mode=vote_mode,
+            vote_max=vote_max,
+            num_machines=num_machines,
+            settings=settings
+        )
+
+        print('---------------------')
+        print(num_machines, ' Machines: ')
+        print('Average Wait Time: ', avg_wait2)
+        print('Max Wait Time: ', max_wait2)
+        print('---------------------')
+    else:
+        print('1 Machine Alert')
+        avg_wait2 = 0
+        max_wait2 = 0
+
+    return feasible_dict, num_machines, avg_wait1, max_wait1, avg_wait2, max_wait2
