@@ -146,7 +146,6 @@ def AKPIp1(
         sumNoiseQuantile = 0
 
         for j in vba_range(1, initial_sample):
-            # batched_mean_mean, batched_mean_max, batched_mean_quantile = run_voter_sim(
             batched_mean_mean, batched_mean_max = run_voter_sim(
                 max_voters=max_voters,
                 expected_voters=expected_voters,
@@ -161,7 +160,6 @@ def AKPIp1(
 
             sumNoiseAverage += batched_mean_mean
             sumNoiseMax += batched_mean_max
-            #  sumNoiseQuantile += batched_mean_quantile
 
             totalObservation += 1
             sumNoise += sample[j]
@@ -169,7 +167,6 @@ def AKPIp1(
         sample_average[i] = sumNoise / initial_sample
         Averagewait_timeForEvaluation = sumNoiseAverage / initial_sample
         Maxwait_timeForEvaluation = sumNoiseMax / initial_sample
-        #  Quantilewait_timeForEvaluation = sumNoiseQuantile / initial_sample
 
     for i in vba_range(I_start_value, k):
         sumSquare = 0
@@ -194,7 +191,6 @@ def AKPIp1(
     CountofRemainSystem = k + 1
     mean_is_higher = False
 
-    #print('cpakpimid3')
     while True:
         for i in vba_range(1, CountofRemainSystem - 1):
             setII = setI[i]
@@ -250,7 +246,6 @@ def AKPIp1(
                     sample_average[setII] = wait_time
                     sample[r] = wait_time
                 else:
-                    # batched_mean_mean, batched_mean_max, batched_mean_quantile = run_voter_sim(
                     batched_mean_mean, batched_mean_max = run_voter_sim(
                         max_voters=max_voters,
                         expected_voters=expected_voters,
@@ -268,8 +263,6 @@ def AKPIp1(
 
                     Averagewait_timeForEvaluation = (Averagewait_timeForEvaluation * (r - 1) + batched_mean_mean) / r
                     Maxwait_timeForEvaluation = (Maxwait_timeForEvaluation * (r - 1) + batched_mean_max) / r
-                    # Quantilewait_timeForEvaluation = (
-                    #     Quantilewait_timeForEvaluation * (r - 1) + batched_mean_quantile) / r
 
             for i in vba_range(I_start_value, CountofRemainSystem - 1):
                 setII = setI[i]
@@ -280,4 +273,4 @@ def AKPIp1(
 
                 sample_variance[setII] = sumSquare / (r - 1)
 
-    return mean_is_higher, Averagewait_timeForEvaluation, Maxwait_timeForEvaluation  # , Quantilewait_timeForEvaluation
+    return Averagewait_timeForEvaluation, Maxwait_timeForEvaluation
