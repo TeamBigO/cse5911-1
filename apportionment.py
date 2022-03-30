@@ -29,7 +29,8 @@ parser.add_argument(
 parser.add_argument(
     'input_xlsx',
     type=str,
-    default='voting_excel.xlsm',
+    default='voting_template.xlsm',
+    #default='voting_excel.xlsm',
     help='second positional argument, input xlsx filepath',
     nargs='?'
 )
@@ -87,6 +88,7 @@ if __name__ == '__main__':
     voting_config = xlrd.open_workbook(args.input_xlsx, on_demand=True)
 
     # get settings from input xlsx file
+    temp = voting_config.sheet_by_name(u'options')
     settings = load_settings_from_sheet(voting_config.sheet_by_name(u'options'))
 
     # get voting location data from input xlsx file

@@ -21,10 +21,10 @@ def home():
             flash('Input values must be valid numbers.', category='error')
     return render_template("home.html")
 
-@views.route('/help')
-def help():
+@views.route('/tutorial')
+def tutorial():
     return render_template("help.html")
 
-@views.route('/settings')
-def settings():
+@views.route('/about')
+def about():
     return render_template("settings.html", settings="Testing", wait_time=10, boolean=True)
