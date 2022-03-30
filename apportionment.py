@@ -10,7 +10,7 @@ import multiprocessing
 from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
-#new for basic plot
+# new for basic plot
 import graphing as gr
 
 from src.settings import load_settings_from_sheet
