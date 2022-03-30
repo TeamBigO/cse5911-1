@@ -176,7 +176,7 @@ def izgbs(
 
     logging.info(feasible_dict)
 
-    print('Verifying results for', location_data, ' using AKPI...')
+    print('\nVerifying results for', location_data, ' using AKPI...')
 
     avg_wait1, max_wait1 = AKPIp1(
         sas_alpha_value=sas_alpha_value,
@@ -202,7 +202,7 @@ def izgbs(
             settings=settings
         )
         else:
-            print('Warning: Voting locations cannot have less than 2 machines (', location_data, ')')
+            print('\nWarning: Voting locations cannot have less than 2 machines (', location_data, ')')
             avg_wait2 = -1
             max_wait2 = -1
     else:

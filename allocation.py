@@ -9,6 +9,7 @@ import argparse
 import editpyxl
 import multiprocessing
 from pprint import pprint
+import graphing as gr
 
 from src.settings import load_settings_from_sheet
 from apportionment import apportionment
@@ -136,9 +137,14 @@ if __name__ == '__main__':
     except Exception as ex:
         logging.critical(f'runtime: {time.perf_counter()-start_time}')
         print('err: ', ex)
+        print('Printing graph...')
+        # graphing plots
+        gr.graph_voting_plot(results)
         input("Press enter to exit.")
         sys.exit()
 
     logging.critical(f'runtime: {time.perf_counter()-start_time}')
-    logging.info('Done.')
+    logging.info('Done. Printing graph...')
+    # graphing plots
+    gr.graph_voting_plot(results)
     input("Press enter to exit.")

@@ -80,6 +80,6 @@ def evaluate_location(inputs: tuple) -> dict:
         best_result['Resource'] = num_machines
         best_result['Exp. Avg. Wait Time'] = akpiAlternative[0]
         best_result['Exp. Max. Wait Time'] = akpiAlternative[1]
-        print('AKPI Alternative was selected for', location_data)
+        print('\nAKPI Alternative was selected for', location_data)
 
     return best_result

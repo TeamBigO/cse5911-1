@@ -10,6 +10,9 @@ import multiprocessing
 from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
+#new for basic plot
+import matplotlib.pyplot as plt
+import graphing as gr
 
 from src.settings import load_settings_from_sheet
 from src.util import set_logging_level
@@ -124,9 +127,18 @@ if __name__ == '__main__':
     except Exception as ex:
         logging.critical(f'runtime: {time.perf_counter()-start_time}')
         print('err: ', ex)
+        print('Printing graph...')
+        # graphing plots
+        gr.graph_voting_plot(results)
         input("Press enter to exit.")
         sys.exit()
 
     logging.critical(f'runtime: {time.perf_counter()-start_time}')
-    logging.info('Done.')
+    logging.info('Done. Printing graph...')
+
+    # graphing plots
+    gr.graph_voting_plot(results)
+
     input("Press enter to exit.")
+
+
