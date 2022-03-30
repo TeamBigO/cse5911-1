@@ -11,7 +11,6 @@ from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
 #new for basic plot
-import matplotlib.pyplot as plt
 import graphing as gr
 
 from src.settings import load_settings_from_sheet
@@ -77,6 +76,8 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
 if __name__ == '__main__':
     multiprocessing.freeze_support()
     args = parser.parse_args()
+
+    print(args)
 
     set_logging_level(args.log)
 
