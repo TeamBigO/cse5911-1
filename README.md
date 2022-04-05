@@ -48,13 +48,12 @@ pip install -r requirements.txt
 7. Optional: If the files are not installed on PATH, copy the file path in which they are installed in to PATH
 
 # Usage
-In command line terminal:
 
-To run apportionment
+To run apportionment:
 ```
 python3 apportionment.py voting_excel.xlsm
 ```
-To run allocation
+To run allocation:
 ```
 python3 apportionment.py voting_excel.xlsm
 ```
