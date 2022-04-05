@@ -10,7 +10,6 @@ import multiprocessing
 from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
-# new for basic plot
 import graphing as gr
 
 from src.settings import load_settings_from_sheet
@@ -20,6 +19,7 @@ from src.evaluate_location import evaluate_location
 
 APPORTIONMENT_RESULT_COLUMN = 5
 
+# parser for parameters when running from command line
 parser = argparse.ArgumentParser()
 parser.add_argument(
     'dir',
@@ -45,7 +45,7 @@ parser.add_argument(
 
 def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
     '''
-        Runs apportionment against the given locations.
+        Runs apportionment against the given locations in the input excel spreadsheet.
 
         Params:
             location_data (dict) :
@@ -57,13 +57,14 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
                 resource number and BatchAvg/BatchMaxAvg wait time.
     '''
     # NOTE: locations start at 1, not 0
+    # reads in location data from the spreadsheet
     location_params = [
         (location_data[i + 1], settings, memo)
         for i in range(settings['NUM_LOCATIONS'])
     ]
 
+    # creates a pool of threads and assigns each location to a thread
     pool = Pool()
-
     return {
         i + 1: result
         for i, result in enumerate(tqdm(
@@ -83,7 +84,6 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Setup
-    # os.chdir(args.dir)
     logging.info(f'Program Initializing...')
     logging.info(f'reading {args.input_xlsx}')
     print("Current Path: ", os.getcwd())
@@ -103,14 +103,17 @@ if __name__ == '__main__':
 
     start_time = time.perf_counter()
 
+    # execute apportionment
     try:
         results = apportionment(location_data, settings, manager.dict())
     except Exception as e:
         logging.info(f'fatal error')
         input()
 
+    # pretty print the optimization results
     pprint(results)
 
+    # write the results to the excel
     try:
         voting_config = editpyxl.Workbook()
         voting_config.open(args.input_xlsx)
@@ -134,10 +137,9 @@ if __name__ == '__main__':
         input("Press enter to exit.")
         sys.exit()
 
+    # print runtime and graph for resources apportioned
     logging.critical(f'runtime: {time.perf_counter()-start_time}')
     logging.info('Done. Printing graph...')
-
-    # graphing plots
     gr.graph_voting_plot(results)
 
     input("Press enter to exit.")

@@ -1,12 +1,18 @@
 # **CSE5911 - ENOVA**
 
-## Contributers
+## First Iteration Contributers
 * Amjad Rammahi
 * Zhiren Xu
 * Collin Wright
 * Luke Howard
 * Tian Liang - Original Contributer
 * Jennifer Heider - Original Contributer
+
+## Second Iteration Contributers
+* Brian Dong
+* Sarah Zhang
+* Liam Gallagher
+* Christopher Tuttle
 
 ## Project Overview
 
@@ -18,25 +24,37 @@
 
 ScienceDirect paper, covers IZGBS.
 
-# Setup
-```
-pip install -r requirements.txt
-```
-
-# Usage
-```
-python3 apportionment.py voting_excel.xlsx
-```
-
-# Alternate Usage
-```
-make
-```
-Open voting_excel.xlsm - press either the allocation or apportionment buttons
-
-
 # Notes
 * Initial runtime of the code was 1622.43 seconds (benchmarked on OSC).
 
 * Apportionment - Infinite resources per locations - goal: min resources that meet specified wait time req.
 * Allocation - Fixed number of resources, fixed number of locations - goal: best distribute resources to minimize total wait times.
+
+# Setup
+```
+We recommend working on this project in Visual Studio Code, as it was the original IDE this program was developed on.
+
+1. Download VSCode
+2. Clone this github repository
+3. Optional: Install the WSL (Windows Subsystem for Linux) if working on a Windows environment
+4. Install Python + Python Extension for VSCode
+5. Install pip with "sudo apt install python3-pip"
+6. Install required packages with "pip install -r requirements.txt"
+7. Optional: If the files are not installed on PATH, copy the file path in which they are installed in to PATH
+
+```
+
+# Usage
+```
+In command line terminal:
+
+python3 apportionment.py voting_excel.xlsm
+python3 apportionment.py voting_excel.xlsm
+
+Adding "--log critical" to above commands will only print critical logs
+```
+
+# Changing Program Settings
+```
+All settings for both allocation and apportionment are controlled from the Settings page within the voting_excel.xlsm file. Any settings changed and saved on this page will be effective on the next run of the software.
+```

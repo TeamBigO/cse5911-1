@@ -1,5 +1,3 @@
-
-
 import os
 import sys
 import xlrd
@@ -18,6 +16,7 @@ from src.fetch_location_data import fetch_location_data
 
 ALLOCATION_RESULT_COLUMN = 6
 
+# parser for parameters when running from command line
 parser = argparse.ArgumentParser()
 parser.add_argument(
     'dir',
@@ -112,14 +111,13 @@ if __name__ == '__main__':
 
     start_time = time.perf_counter()
 
-    # try:
+    # execute allocation
     results = allocation(location_data, settings, manager.dict())
-    # except Exception:
-    # logging.info(f'fatal error')
-    # input()
 
+    # pretty print the optimization results
     pprint(results)
 
+    # write the results to the excel
     try:
         voting_config = editpyxl.Workbook()
         voting_config.open(args.input_xlsx)
@@ -143,8 +141,9 @@ if __name__ == '__main__':
         input("Press enter to exit.")
         sys.exit()
 
+    # print runtime and graph for resources allocated
     logging.critical(f'runtime: {time.perf_counter()-start_time}')
     logging.info('Done. Printing graph...')
-    # graphing plots
     gr.graph_voting_plot(results)
+
     input("Press enter to exit.")

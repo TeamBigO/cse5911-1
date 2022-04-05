@@ -4,11 +4,16 @@ from scipy.stats import beta
 
 from src.voter_sim import voter_sim
 
+#------------------------------------------------
+# This file was transcribed from Dr. Theodore Allen's
+# original simulation and uses the AKPI algorithm to
+# verify with rigorous gaurantee the accuracy of results
+# from the traditional binary search algorithm.
+#------------------------------------------------
+
 
 def presort_HD_L(wait_times: list, q: float) -> float:
-    '''
-        # TODO
-    '''
+
     s = 0
     length = len(wait_times)
 
@@ -22,9 +27,7 @@ def presort_HD_L(wait_times: list, q: float) -> float:
 
 
 def sum_and_max(wait_times: list) -> tuple:
-    '''
-        # TODO
-    '''
+
     s, m = 0, 0
 
     for w in wait_times:
@@ -44,13 +47,10 @@ def run_voter_sim(
     num_machines,
     settings: dict
 ):
-    '''
-        # TODO
-    '''
+
     batched_mean_mean = 0
     batched_mean_max = 0
     batched_mean_quantile = 0
-    # replicate_quantile = [0] * settings['BATCH_SIZE']
 
     for _ in range(settings['BATCH_SIZE']):
         wait_times = voter_sim(
@@ -67,17 +67,15 @@ def run_voter_sim(
 
         replicate_avg_wait = s / len(wait_times)
         replicate_max_wait = m
-        # replicate_quantile = presort_HD_L(wait_times, settings['OBJECTIVE_QUANTILE_VALUE'])
 
         batched_mean_mean += replicate_avg_wait
         batched_mean_max += replicate_max_wait
-        # batched_mean_quantile += replicate_quantile
 
     batched_mean_mean /= settings['BATCH_SIZE']
     batched_mean_max /= settings['BATCH_SIZE']
     batched_mean_quantile /= settings['BATCH_SIZE']
 
-    return batched_mean_mean, batched_mean_max  # , batched_mean_quantile
+    return batched_mean_mean, batched_mean_max
 
 
 # NOTE: as far as I can tell, the VBA lists are 1-indexed so I am padding the lists to be size + 1
@@ -104,9 +102,7 @@ def AKPIp1(
     num_machines: int,
     settings: dict
 ):
-    '''
-        # TODO
-    '''
+
     # Step 0. Setup
     initial_sample = settings['INITIAL_SAMPLE_SIZE']
     wait_time = settings['SERVICE_REQ']
@@ -124,7 +120,6 @@ def AKPIp1(
     # Step 0b. Set Set I
     setI = redim(k, int)
 
-    #print('cpakpimid0')
     # Step 0c. Calculate eta
     eta = ((2 - 2 * ((1 - sas_alpha_value) ** (1 / k))) ** (-2 / (initial_sample - 1)) - 1) / 2
 

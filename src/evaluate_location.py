@@ -2,10 +2,9 @@ import math
 
 from src.izgbs import izgbs
 
-
 def evaluate_location(inputs: tuple) -> dict:
     '''
-        Runs IZGBS on a specified location.
+        Runs IZGBS (Indifference Zone Generated Binary Search) on a specified location.
 
         Params:
             inputs (tuple) : location data, settings, memo.
@@ -17,8 +16,10 @@ def evaluate_location(inputs: tuple) -> dict:
 
     best_result = {}
 
+    # set start value to half the ceiling
     start_val = math.ceil((settings['MAX_MACHINES'] - 1) / 2)
 
+    # run IZBGS on current parameters
     loc_res, num_machines, akpiVerification, akpiAlternative = izgbs(
         settings['MAX_MACHINES'],
         start_val,
@@ -28,12 +29,15 @@ def evaluate_location(inputs: tuple) -> dict:
         memo
     )
 
+    # create feasible matrix
     loc_feas = []
 
+    # if results are feasible, add them to the feasible matrix
     for key, value in loc_res.items():
         if value['Feasible'] == 1:
             loc_feas.append(value)
 
+    # if there are feasible results
     if len(loc_feas) > 0:
         machines_value = []
 
@@ -67,15 +71,18 @@ def evaluate_location(inputs: tuple) -> dict:
 
         loc_res_min = loc_res[min_index]
 
+        # populate overall results with info for this location
         best_result['Resource'] = loc_res_min['Machines']
         best_result['Exp. Avg. Wait Time'] = loc_res_min['BatchAvg']
         best_result['Exp. Max. Wait Time'] = loc_res_min['BatchMaxAvg']
 
+    # populate AKPI results with returned AKPI info
     best_result['AKPI Check AVG'] = akpiVerification[0]
     best_result['AKPI Check MAX'] = akpiVerification[1]
     best_result['AKPI ALT AVG'] = akpiAlternative[0]
     best_result['AKPI ALT MAX'] = akpiAlternative[1]
 
+    # check the result against the alternative and replace the result if the alternative is better
     if akpiAlternative[1] < settings['SERVICE_REQ'] and akpiAlternative[0] > 0:
         best_result['Resource'] = num_machines
         best_result['Exp. Avg. Wait Time'] = akpiAlternative[0]
