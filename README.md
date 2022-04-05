@@ -31,30 +31,37 @@ ScienceDirect paper, covers IZGBS.
 * Allocation - Fixed number of resources, fixed number of locations - goal: best distribute resources to minimize total wait times.
 
 # Setup
-```
 We recommend working on this project in Visual Studio Code, as it was the original IDE this program was developed on.
 
 1. Download VSCode
 2. Clone this github repository
 3. Optional: Install the WSL (Windows Subsystem for Linux) if working on a Windows environment
 4. Install Python + Python Extension for VSCode
-5. Install pip with "sudo apt install python3-pip"
-6. Install required packages with "pip install -r requirements.txt"
+5. Install pip with
+```
+sudo apt install python3-pip
+```
+6. Install required packages with 
+```
+pip install -r requirements.txt
+```
 7. Optional: If the files are not installed on PATH, copy the file path in which they are installed in to PATH
 
-```
-
 # Usage
-```
 In command line terminal:
 
+To run apportionment
+```
 python3 apportionment.py voting_excel.xlsm
+```
+To run allocation
+```
 python3 apportionment.py voting_excel.xlsm
-
-Adding "--log critical" to above commands will only print critical logs
+```
+Use "--log critical" to only print critical logs
+```
+python3 apportionment.py voting_excel.xlsm --log critical
 ```
 
 # Changing Program Settings
-```
 All settings for both allocation and apportionment are controlled from the Settings page within the voting_excel.xlsm file. Any settings changed and saved on this page will be effective on the next run of the software.
-```
