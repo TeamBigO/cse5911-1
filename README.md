@@ -20,11 +20,11 @@
 
 # Resources
 
-## *[Determining resource requirements for elections using indifference-zone generalized binary search](https://www.sciencedirect.com/science/article/pii/S0360835219307120)*
+### *[Determining resource requirements for elections using indifference-zone generalized binary search](https://www.sciencedirect.com/science/article/pii/S0360835219307120)*
 
 ScienceDirect paper, covers IZGBS.
 
-## *[Fully Sequential Procedures for Comparing Constrained Systems via Simulation](AKPI.pdf)*
+### *[Fully Sequential Procedures for Comparing Constrained Systems via Simulation](AKPI.pdf)*
 
 Scientific paper by Sigrún Andradóttir and Seong-Hee Kim
 
