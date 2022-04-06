@@ -1,4 +1,4 @@
-# **CSE5911 - AllocVote**
+# **CSE5911 - AllocVote (previously ENOVA)**
 
 ## First Iteration Contributers
 * Amjad Rammahi
