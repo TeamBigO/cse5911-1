@@ -10,6 +10,7 @@ import multiprocessing
 from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
+import cgi
 
 from src.settings import load_settings_from_sheet
 from src.util import set_logging_level
@@ -55,6 +56,7 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
             (dict) : locations with the min feasible
                 resource number and BatchAvg/BatchMaxAvg wait time.
     '''
+
     # NOTE: locations start at 1, not 0
     location_params = [
         (location_data[i + 1], settings, memo)
@@ -73,6 +75,12 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
 
 
 if __name__ == '__main__':
+    # WIP - trying to get data from form
+    form = cgi.FieldStorage()
+    ids = form.getvalue('id')
+    print("HELLO")
+    print(ids)
+
     multiprocessing.freeze_support()
     args = parser.parse_args()
 
