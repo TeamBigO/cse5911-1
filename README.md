@@ -16,7 +16,7 @@
 
 ## Project Overview
 
-[Efficient Near-Optimal Voting Allocation.PDF](Efficient&#32;Near-Optimal&#32;Voting&#32;Allocation.pdf)
+### *[Efficient Near-Optimal Voting Allocation.PDF](Efficient&#32;Near-Optimal&#32;Voting&#32;Allocation.pdf)*
 
 # Resources
 
@@ -26,7 +26,7 @@ ScienceDirect paper, covers IZGBS.
 
 ### *[Fully Sequential Procedures for Comparing Constrained Systems via Simulation](AKPI.pdf)*
 
-Scientific paper by Sigrún Andradóttir and Seong-Hee Kim
+Scientific paper by Sigrún Andradóttir and Seong-Hee Kim.
 
 # Notes
 * Initial runtime of the code was 1622.43 seconds (benchmarked on OSC).
