@@ -1,4 +1,4 @@
-# **CSE5911 - AllocVote**
+# **CSE5911 - AllocVote (previously ENOVA)**
 
 ## First Iteration Contributers
 * Amjad Rammahi
@@ -31,8 +31,8 @@ Scientific paper by Sigrún Andradóttir and Seong-Hee Kim
 # Notes
 * Initial runtime of the code was 1622.43 seconds (benchmarked on OSC).
 
-* Apportionment - Infinite resources per locations - goal: min resources that meet specified wait time req.
-* Allocation - Fixed number of resources, fixed number of locations - goal: best distribute resources to minimize total wait times.
+* Apportionment assumes an infinite number of resources (voting machines, check-in booths, etc.) per location. The goal of apportionment is to return the mininum number of resources that meet a specified wait time requirement (no more than 30 minutes, no more than 60 minutes, etc.).
+* Allocation takes in a fixed number of resources with a fixed number of locations. The goal of allocation is to calculate how best to distribute resources to minimize total wait times. Allocation will use apportionment in its calculation.
 
 # Setup
 We recommend working on this project in Visual Studio Code, as it was the original IDE this program was developed on.
