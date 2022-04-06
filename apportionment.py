@@ -81,10 +81,11 @@ if __name__ == '__main__':
     print(args)
 
     set_logging_level(args.log)
+    logging.info(f'Program Initializing...')
 
     # =========================================================================
-    # Setup
-    logging.info(f'Program Initializing...')
+    # Setup to read from excel spreadsheet
+    
     logging.info(f'reading {args.input_xlsx}')
     print("Current Path: ", os.getcwd())
     print("open_workbook target: ", args.input_xlsx)
@@ -99,6 +100,31 @@ if __name__ == '__main__':
     manager = multiprocessing.Manager()
 
     # =========================================================================
+
+    # =========================================================================
+    # WIP: Setup to read in a string
+
+    id = "1 2 3 4 5"
+    expectedVoters = "100 200 300 400 500"
+    eligibleVoters = "200 400 600 800 1000"
+    ballotLength = "5 7 6 9 12"
+
+    idT = id.split(" ")
+    exV = expectedVoters.split(" ")
+    elV = eligibleVoters.split(" ")
+    bL = ballotLength.split(" ")
+    locationData = {}
+
+    for i, x in enumerate(idT):
+        print(i)
+        tpl = {'Likely or Exp. Voters': int(exV[i]),  'Eligible Voters': int(elV[i]), 'Ballot Length Measure': int(bL[i])}
+        locationData[int(x)] = tpl
+
+    print(locationData)
+    print(location_data)
+
+    # =========================================================================
+
     # Main
 
     start_time = time.perf_counter()
