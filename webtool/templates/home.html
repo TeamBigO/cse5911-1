@@ -43,13 +43,16 @@
     </div>
     <br/>
     <!-- trying to figure out how to send data here and call apportionment + allocation -->
-    <button type="apportionment" method="post" action="apportionment.py" class="btn btn-primary">Apportionment</button>
-    <button type="allocation" method="post" action="{{ url_for('allocation') }}" class="btn btn-primary">Allocation</button>
+    <button type="apportionment" name="appo" method="post" action="apportionment.py" class="btn btn-primary">Apportionment</button>
+    <button type="allocation" name="allo" method="post" action="{{ url_for('allocation') }}" class="btn btn-primary">Allocation</button>
 </form>
 <p>
 <form action="yourScript">
 <input type="file" id="myFile" name="filename">
 <input type="submit">
 </form>
+</p>
+<p>
+<textarea class="scrollabletextbox" name="result">Results will display here</textarea>
 </p>
 {% endblock %}

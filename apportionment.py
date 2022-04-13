@@ -58,10 +58,17 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
     '''
 
     # NOTE: locations start at 1, not 0
+    # print("HERE")    
+    # print("loc data")
+    # pprint(location_data)
+    # print(settings['NUM_LOCATIONS'])
     location_params = [
         (location_data[i + 1], settings, memo)
         for i in range(settings['NUM_LOCATIONS'])
     ]
+
+    # print("loc params")
+    # pprint(location_params)
 
     pool = Pool()
 
@@ -101,6 +108,7 @@ if __name__ == '__main__':
 
     # get voting location data from input xlsx file
     location_data = fetch_location_data(voting_config, settings)
+    pprint(location_data)
 
     manager = multiprocessing.Manager()
 

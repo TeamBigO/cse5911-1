@@ -1,5 +1,10 @@
 # store standard routes (where users can go) on our website
 from flask import Blueprint, render_template, request, flash
+import logging
+import apportionment as ap
+import multiprocessing
+from src import settings as sett
+from pprint import pprint
 
 views = Blueprint('views', __name__)
 
@@ -12,6 +17,7 @@ def home():
     if request.method == 'POST':
         # get all info from form
         id = request.form.get('id')
+        # TODO the id category only works if you fill it up with 1 2 3 corresponding to num of inputs.. should have a better way to track the location.
         likely_voters = request.form.get('LV')
         eligible_voters = request.form.get('EV')
         ballot_length = request.form.get('BL')
@@ -37,6 +43,44 @@ def home():
 
                 input_data[int(item)] = loc_dict
                 #print(input_data)
+                    #testing to see which button was clicked
+            appo = request.form.get('appo')
+            allo = request.form.get('allo')
+            # right now this is not correct.. even if I haven't input anything it says I have... figure out post buttons
+            if appo is not None:
+                print("clicked on apportionment")
+                manager = multiprocessing.Manager()
+                setts = sett.default_settings()
+                # pprint(setts)
+                # make sure to match the number of inputs with the num locations in the settings before running apportionment or allocation
+                setts['NUM_LOCATIONS'] = len(input_data)
+
+                pprint(input_data)
+                try:
+                    results = ap.apportionment(input_data, setts, manager.dict())
+                except Exception as e:
+                    logging.info(f'fatal error')
+                    input()
+                pprint(results)
+                results_output = request.form.get('result')
+                # not sure what I should do here to make it look good.
+            elif allo is not None:
+                print("clicked on allocation")
+                #lots of duplicate code in here currently. 
+                manager = multiprocessing.Manager()
+                setts = sett.default_settings()
+                # pprint(setts)
+                # make sure to match the number of inputs with the num locations in the settings before running apportionment or allocation
+                setts['NUM_LOCATIONS'] = len(input_data)
+
+                pprint(input_data)
+                try:
+                    results = ap.allocation(input_data, setts, manager.dict())
+                except Exception as e:
+                    logging.info(f'fatal error')
+                    input()
+                pprint(results)
+                results_output = request.form.get('result')
         else:
             # error with input - flash a message
             flash('Input values must be valid numbers.', category='error')
