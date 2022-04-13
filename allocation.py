@@ -1,5 +1,3 @@
-
-
 import os
 import sys
 import xlrd
@@ -9,6 +7,7 @@ import argparse
 import editpyxl
 import multiprocessing
 from pprint import pprint
+import graphing as gr
 
 from src.settings import load_settings_from_sheet
 from apportionment import apportionment
@@ -17,6 +16,7 @@ from src.fetch_location_data import fetch_location_data
 
 ALLOCATION_RESULT_COLUMN = 6
 
+# parser for parameters when running from command line
 parser = argparse.ArgumentParser()
 parser.add_argument(
     'dir',
@@ -112,14 +112,13 @@ if __name__ == '__main__':
 
     start_time = time.perf_counter()
 
-    # try:
+    # execute allocation
     results = allocation(location_data, settings, manager.dict())
-    # except Exception:
-    # logging.info(f'fatal error')
-    # input()
 
+    # pretty print the optimization results
     pprint(results)
 
+    # write the results to the excel
     try:
         voting_config = editpyxl.Workbook()
         voting_config.open(args.input_xlsx)
@@ -137,9 +136,15 @@ if __name__ == '__main__':
     except Exception as ex:
         logging.critical(f'runtime: {time.perf_counter()-start_time}')
         print('err: ', ex)
+        print('Printing graph...')
+        # graphing plots
+        gr.graph_voting_plot(results)
         input("Press enter to exit.")
         sys.exit()
 
+    # print runtime and graph for resources allocated
     logging.critical(f'runtime: {time.perf_counter()-start_time}')
-    logging.info('Done.')
+    logging.info('Done. Printing graph...')
+    gr.graph_voting_plot(results)
+
     input("Press enter to exit.")

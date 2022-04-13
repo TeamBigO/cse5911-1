@@ -11,6 +11,7 @@ from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
 import cgi
+import graphing as gr
 
 from src.settings import load_settings_from_sheet
 from src.util import set_logging_level
@@ -19,6 +20,7 @@ from src.evaluate_location import evaluate_location
 
 APPORTIONMENT_RESULT_COLUMN = 5
 
+# parser for parameters when running from command line
 parser = argparse.ArgumentParser()
 parser.add_argument(
     'dir',
@@ -45,7 +47,7 @@ parser.add_argument(
 
 def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
     '''
-        Runs apportionment against the given locations.
+        Runs apportionment against the given locations in the input excel spreadsheet.
 
         Params:
             location_data (dict) :
@@ -62,16 +64,14 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
     # print("loc data")
     # pprint(location_data)
     # print(settings['NUM_LOCATIONS'])
+    # reads in location data from the spreadsheet
     location_params = [
         (location_data[i + 1], settings, memo)
         for i in range(settings['NUM_LOCATIONS'])
     ]
 
-    # print("loc params")
-    # pprint(location_params)
-
+    # creates a pool of threads and assigns each location to a thread
     pool = Pool()
-
     return {
         i + 1: result
         for i, result in enumerate(tqdm(
@@ -91,12 +91,14 @@ if __name__ == '__main__':
     multiprocessing.freeze_support()
     args = parser.parse_args()
 
+    print(args)
+
     set_logging_level(args.log)
+    logging.info(f'Program Initializing...')
 
     # =========================================================================
-    # Setup
-    # os.chdir(args.dir)
-    logging.info(f'Program Initializing...')
+    # Setup to read from excel spreadsheet
+    
     logging.info(f'reading {args.input_xlsx}')
     print("Current Path: ", os.getcwd())
     print("open_workbook target: ", args.input_xlsx)
@@ -113,18 +115,46 @@ if __name__ == '__main__':
     manager = multiprocessing.Manager()
 
     # =========================================================================
+
+    # =========================================================================
+    # WIP: Setup to read in a string
+
+    id = "1 2 3 4 5"
+    expectedVoters = "100 200 300 400 500"
+    eligibleVoters = "200 400 600 800 1000"
+    ballotLength = "5 7 6 9 12"
+
+    idT = id.split(" ")
+    exV = expectedVoters.split(" ")
+    elV = eligibleVoters.split(" ")
+    bL = ballotLength.split(" ")
+    locationData = {}
+
+    for i, x in enumerate(idT):
+        print(i)
+        tpl = {'Likely or Exp. Voters': int(exV[i]),  'Eligible Voters': int(elV[i]), 'Ballot Length Measure': int(bL[i])}
+        locationData[int(x)] = tpl
+
+    print(locationData)
+    print(location_data)
+
+    # =========================================================================
+
     # Main
 
     start_time = time.perf_counter()
 
+    # execute apportionment
     try:
         results = apportionment(location_data, settings, manager.dict())
     except Exception as e:
         logging.info(f'fatal error')
         input()
 
+    # pretty print the optimization results
     pprint(results)
 
+    # write the results to the excel
     try:
         voting_config = editpyxl.Workbook()
         voting_config.open(args.input_xlsx)
@@ -142,9 +172,17 @@ if __name__ == '__main__':
     except Exception as ex:
         logging.critical(f'runtime: {time.perf_counter()-start_time}')
         print('err: ', ex)
+        print('Printing graph...')
+        # graphing plots
+        gr.graph_voting_plot(results)
         input("Press enter to exit.")
         sys.exit()
 
+    # print runtime and graph for resources apportioned
     logging.critical(f'runtime: {time.perf_counter()-start_time}')
-    logging.info('Done.')
+    logging.info('Done. Printing graph...')
+    gr.graph_voting_plot(results)
+
     input("Press enter to exit.")
+
+

@@ -22,6 +22,12 @@ IZGBS code, binary searches on the number of resources and determines feasibilit
 
 </br>
 
+## **[AKPIp1.py](AKPIp1.py)**
+
+AKPI code, verifies the accuracy of some given set of parameters.
+
+</br>
+
 ## **[settings.py](settings.py)**
 
 Code for pulling the simulation (and other) settings from the options tab of the xlsm file.
