@@ -53,11 +53,13 @@ pip install -r requirements.txt
 
 # Usage
 
-To run apportionment:
+To run with UI, open main.py and run in VSCode environment
+
+To run apportionment in command line:
 ```
 python3 apportionment.py voting_excel.xlsm
 ```
-To run allocation:
+To run allocation in command line:
 ```
 python3 apportionment.py voting_excel.xlsm
 ```
