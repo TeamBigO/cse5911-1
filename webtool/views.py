@@ -2,6 +2,7 @@
 from flask import Blueprint, render_template, request, flash
 import logging
 import apportionment as ap
+import allocation as al
 import multiprocessing
 from src import settings as sett
 from pprint import pprint
@@ -63,6 +64,7 @@ def home():
                     input()
                 pprint(results)
                 results_output = request.form.get('result')
+                #pprint(results_output)
                 # not sure what I should do here to make it look good.
             elif allo is not None:
                 print("clicked on allocation")
@@ -75,12 +77,13 @@ def home():
 
                 pprint(input_data)
                 try:
-                    results = ap.allocation(input_data, setts, manager.dict())
+                    results = al.allocation(input_data, setts, manager.dict())
                 except Exception as e:
                     logging.info(f'fatal error')
                     input()
                 pprint(results)
                 results_output = request.form.get('result')
+                #pprint(results_output)
         else:
             # error with input - flash a message
             flash('Input values must be valid numbers.', category='error')
