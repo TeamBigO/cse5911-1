@@ -3,8 +3,9 @@ import logging
 import numpy as np
 from random import expovariate
 
-# NOTE: this is TandemQueueWQuartile
-
+# NOTE: this is TandemQueueWQuartile in the original VBA program
+# voter sim uses external libraries to simulate voting day waiting lines
+# and expected wait times
 
 class VotingLocation(object):
     def __init__(

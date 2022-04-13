@@ -6,7 +6,6 @@ from statistics import mean
 from src.voter_sim import voter_sim
 from src.AKPIp1 import AKPIp1
 
-
 def voting_time_calcs(ballot_length: int, settings: dict) -> tuple:
     '''
         Calculates the min/mode/max/avg for a given ballot.
@@ -98,9 +97,11 @@ def izgbs(
         # NOTE: these all `should` be ints, so '10.0' vs '10' should not be a problem
         key = f'{max_voters},{expected_voters},{ballot_length},{num_machines}'
 
+        # check in memo to see if it already exists, and pull it if so
         if key in memo:
             avg_wait_time_avg, max_wait_time_avg, max_wait_time_std = memo[key]
         else:
+            # initialize arrays for batching
             batch_avg_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
             batch_max_wait_times = [[] for _ in range(settings['NUM_BATCHES'])]
 
@@ -123,7 +124,7 @@ def izgbs(
 
             # =====================================
 
-            # reduce individual batches to their mean's
+            # take the batch data and average it
             avg_wait_times = [
                 mean(batch)
                 for batch in batch_avg_wait_times
@@ -138,13 +139,14 @@ def izgbs(
             max_wait_time_avg = mean(max_wait_times)
             max_wait_time_std = np.std(max_wait_times)
 
+            # add the result to the memo
             memo[key] = (avg_wait_time_avg, max_wait_time_avg, max_wait_time_std)
 
         # populate results
         feasible_dict[num_machines]['BatchAvg'] = avg_wait_time_avg
         feasible_dict[num_machines]['BatchMaxAvg'] = max_wait_time_avg
 
-        # calculate test statistic (p)
+        # calculate test statistic (p) using traditional binary search
         if max_wait_time_std > 0:  # NOTE: > 0, avoiding divide by 0 error
             z = (max_wait_time_avg - settings['SERVICE_REQ'] + settings['DELTA_INDIFFERENCE_ZONE']) / (max_wait_time_std / math.sqrt(settings['NUM_BATCHES']))
             p = st.norm.cdf(z)
@@ -176,9 +178,11 @@ def izgbs(
 
     logging.info(feasible_dict)
 
-    print('Verifying results for', location_data, ' using AKPI...')
+    # start verifying the results with AKPI
+    print('\nVerifying results for', location_data, ' using AKPI...')
 
-    mean_is_higher1, avg_wait1, max_wait1 = AKPIp1(
+    # first check the accuracy of the result
+    avg_wait1, max_wait1 = AKPIp1(
         sas_alpha_value=sas_alpha_value,
         max_voters=max_voters,
         expected_voters=expected_voters,
@@ -189,12 +193,11 @@ def izgbs(
         settings=settings
     )
 
-    print(num_machines+1, ' Machines: ')
-    print('Average Wait Time: ', avg_wait1)
-    print('Max Wait Time: ', max_wait1)
-
-    if num_machines != 1 :
-        mean_is_higher2, avg_wait2, max_wait2 = AKPIp1(
+    # if the result is within service requirements, check 1 machine less to make sure there is not a more optimal solution
+    # if the result is not within service requirements, check 1 machine more
+    if max_wait1 <= settings['SERVICE_REQ'] :
+        if num_machines != 1 :
+            avg_wait2, max_wait2 = AKPIp1(
             sas_alpha_value=sas_alpha_value,
             max_voters=max_voters,
             expected_voters=expected_voters,
@@ -204,15 +207,24 @@ def izgbs(
             num_machines=num_machines,
             settings=settings
         )
-
-        print('---------------------')
-        print(num_machines, ' Machines: ')
-        print('Average Wait Time: ', avg_wait2)
-        print('Max Wait Time: ', max_wait2)
-        print('---------------------')
+        else:
+            print('\nWarning: Voting locations cannot have less than 2 machines (', location_data, ')')
+            avg_wait2 = -1
+            max_wait2 = -1
     else:
-        print('1 Machine Alert')
-        avg_wait2 = 0
-        max_wait2 = 0
+        avg_wait2, max_wait2 = AKPIp1(
+            sas_alpha_value=sas_alpha_value,
+            max_voters=max_voters,
+            expected_voters=expected_voters,
+            vote_min=vote_min,
+            vote_mode=vote_mode,
+            vote_max=vote_max,
+            num_machines=num_machines+2,
+            settings=settings
+        )
 
-    return feasible_dict, num_machines, avg_wait1, max_wait1, avg_wait2, max_wait2
+    # bundle the results into tuples
+    akpiVerification = (avg_wait1, max_wait1)
+    akpiAlternative = (avg_wait2, max_wait2)
+
+    return feasible_dict, num_machines, akpiVerification, akpiAlternative

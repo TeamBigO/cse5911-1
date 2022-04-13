@@ -8,7 +8,7 @@ from src.AKPIp1 import AKPIp1
 def test_akpi_type():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         1000,
         500,
@@ -19,7 +19,6 @@ def test_akpi_type():
         settings
     )
 
-    assert type(mih) == bool
     assert type(avgWait) == float
     assert type(maxWait) == float
 
@@ -27,7 +26,7 @@ def test_akpi_type():
 def test_akpi_possible():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         1000,
         500,
@@ -44,7 +43,7 @@ def test_akpi_possible():
 def test_akpi_impossible():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         10000,
         5000,
@@ -62,7 +61,7 @@ def test_akpi_impossible():
 def test_akpi_low_voters():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         100,
         25,
@@ -79,7 +78,7 @@ def test_akpi_low_voters():
 def test_akpi_high_voters():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         10000,
         5000,
@@ -96,7 +95,7 @@ def test_akpi_high_voters():
 def test_akpi_low_voting_times():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         5000,
         2500,
@@ -113,7 +112,7 @@ def test_akpi_low_voting_times():
 def test_akpi_high_voting_times():
     settings = default_settings()
 
-    mih, avgWait, maxWait = AKPIp1(
+    avgWait, maxWait = AKPIp1(
         0.5,
         5000,
         2500,
