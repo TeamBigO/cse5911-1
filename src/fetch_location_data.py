@@ -20,7 +20,10 @@ def fetch_location_data(voting_config: Book, settings: dict) -> dict:
     location_data = {}
 
     for i in range(1, settings['NUM_LOCATIONS'] + 1):
+        temp = settings['NUM_LOCATIONS']
+        print(f'DEBUG: {temp}')
         data = map(int, location_sheet.row_values(i)[1:])  # [1:] drops ID column
+        print(f'DEBUG: {data}')
         location_data[i] = dict(zip(COLUMN_NAMES, data))
 
     return location_data

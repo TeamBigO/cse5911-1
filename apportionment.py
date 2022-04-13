@@ -10,6 +10,7 @@ import multiprocessing
 from tqdm import tqdm
 from pprint import pprint
 from multiprocessing import Pool
+import cgi
 import graphing as gr
 
 from src.settings import load_settings_from_sheet
@@ -31,7 +32,8 @@ parser.add_argument(
 parser.add_argument(
     'input_xlsx',
     type=str,
-    default='voting_excel.xlsm',
+    default='voting_template.xlsm',
+    #default='voting_excel.xlsm',
     help='second positional argument, input xlsx filepath',
     nargs='?'
 )
@@ -56,7 +58,12 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
             (dict) : locations with the min feasible
                 resource number and BatchAvg/BatchMaxAvg wait time.
     '''
+
     # NOTE: locations start at 1, not 0
+    # print("HERE")    
+    # print("loc data")
+    # pprint(location_data)
+    # print(settings['NUM_LOCATIONS'])
     # reads in location data from the spreadsheet
     location_params = [
         (location_data[i + 1], settings, memo)
@@ -75,6 +82,12 @@ def apportionment(location_data: dict, settings: dict, memo: dict = {}) -> dict:
 
 
 if __name__ == '__main__':
+    # WIP - trying to get data from form
+    form = cgi.FieldStorage()
+    ids = form.getvalue('id')
+    print("HELLO")
+    print(ids)
+
     multiprocessing.freeze_support()
     args = parser.parse_args()
 
@@ -92,10 +105,12 @@ if __name__ == '__main__':
     voting_config = xlrd.open_workbook(args.input_xlsx, on_demand=True)
 
     # get settings from input xlsx file
+    temp = voting_config.sheet_by_name(u'options')
     settings = load_settings_from_sheet(voting_config.sheet_by_name(u'options'))
 
     # get voting location data from input xlsx file
     location_data = fetch_location_data(voting_config, settings)
+    pprint(location_data)
 
     manager = multiprocessing.Manager()
 

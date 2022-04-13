@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}ENOVA Webtool{% endblock %}
+
+{% block content %} 
+<form method="POST">
+    <h3 align="center">Simulation Inputs</h3>
+    <div class="form-group">
+        <label for="id">ID</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="id" 
+            name="id" 
+            placeholder="Enter precinct ID"/>
+    </div>
+    <div class="form-group">
+        <label for="LV">Likely or Expected Voters</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="LV" 
+            name="LV" 
+            placeholder="Enter number"/>
+    </div>
+    <div class="form-group">
+        <label for="EV">Eligible Voters</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="EV" 
+            name="EV" 
+            placeholder="Enter number"/>
+    </div>
+    <div class="form-group">
+        <label for="BL">Ballot Length Measure</label>
+        <input 
+            type="text" 
+            class="form-control" 
+            id="BL" 
+            name="BL" 
+            placeholder="Enter number"/>
+    </div>
+    <br/>
+    <!-- trying to figure out how to send data here and call apportionment + allocation -->
+    <button type="apportionment" name="appo" method="post" action="apportionment.py" class="btn btn-primary">Apportionment</button>
+    <button type="allocation" name="allo" method="post" action="{{ url_for('allocation') }}" class="btn btn-primary">Allocation</button>
+</form>
+<p>
+<form action="yourScript">
+<input type="file" id="myFile" name="filename">
+<input type="submit">
+</form>
+</p>
+<p>
+<textarea class="scrollabletextbox" name="result">Results will display here</textarea>
+</p>
+{% endblock %}

@@ -64,7 +64,7 @@ def load_settings_from_sheet(options_sheet: Book):
 
     for row_idx in range(options_sheet.nrows):
         data = options_sheet.row_values(row_idx)
-
+        print(f'DATA: {data}')
         # skip empty rows and headers
         if data[0] in ['', 'Control', 'Advanced', 'General Settings', 'Allocation Settings']:
             continue

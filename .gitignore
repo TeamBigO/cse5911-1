@@ -21,7 +21,6 @@ dist/voting_excel.xlsx
 *.zip
 *.pkg
 *.pyz
-*.html
 *.txt
 *.manifest
 *.exe

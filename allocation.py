@@ -28,7 +28,8 @@ parser.add_argument(
 parser.add_argument(
     'input_xlsx',
     type=str,
-    default='voting_excel.xlsm',
+    default='voting_template.xlsm',
+    #default='voting_excel.xlsm',
     help='first positional argument, input xlsx filepath',
     nargs='?'
 )
