@@ -119,24 +119,24 @@ if __name__ == '__main__':
     # =========================================================================
     # WIP: Setup to read in a string
 
-    id = "1 2 3 4 5"
-    expectedVoters = "100 200 300 400 500"
-    eligibleVoters = "200 400 600 800 1000"
-    ballotLength = "5 7 6 9 12"
+    # id = "1 2 3 4 5"
+    # expectedVoters = "100 200 300 400 500"
+    # eligibleVoters = "200 400 600 800 1000"
+    # ballotLength = "5 7 6 9 12"
 
-    idT = id.split(" ")
-    exV = expectedVoters.split(" ")
-    elV = eligibleVoters.split(" ")
-    bL = ballotLength.split(" ")
-    locationData = {}
+    # idT = id.split(" ")
+    # exV = expectedVoters.split(" ")
+    # elV = eligibleVoters.split(" ")
+    # bL = ballotLength.split(" ")
+    # locationData = {}
 
-    for i, x in enumerate(idT):
-        print(i)
-        tpl = {'Likely or Exp. Voters': int(exV[i]),  'Eligible Voters': int(elV[i]), 'Ballot Length Measure': int(bL[i])}
-        locationData[int(x)] = tpl
+    # for i, x in enumerate(idT):
+    #     print(i)
+    #     tpl = {'Likely or Exp. Voters': int(exV[i]),  'Eligible Voters': int(elV[i]), 'Ballot Length Measure': int(bL[i])}
+    #     locationData[int(x)] = tpl
 
-    print(locationData)
-    print(location_data)
+    # print(locationData)
+    # print(location_data)
 
     # =========================================================================
 
