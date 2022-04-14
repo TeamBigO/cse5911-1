@@ -66,6 +66,7 @@ def home():
                 results_output = request.form.get('result')
                 #pprint(results_output)
                 # not sure what I should do here to make it look good.
+                return render_template("home.html", res=results, inputs=input_data, type="Number of Resources Based on Apportionment")
             elif allo is not None:
                 print("clicked on allocation")
                 #lots of duplicate code in here currently. 
@@ -84,6 +85,7 @@ def home():
                 pprint(results)
                 results_output = request.form.get('result')
                 #pprint(results_output)
+                return render_template("home.html", res=results, inputs=input_data, type="Number of Resources Based on Allocation")
         else:
             # error with input - flash a message
             flash('Input values must be valid numbers.', category='error')

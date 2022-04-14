@@ -46,13 +46,58 @@
     <button type="apportionment" name="appo" method="post" action="apportionment.py" class="btn btn-primary">Apportionment</button>
     <button type="allocation" name="allo" method="post" action="{{ url_for('allocation') }}" class="btn btn-primary">Allocation</button>
 </form>
-<p>
-<form action="yourScript">
-<input type="file" id="myFile" name="filename">
-<input type="submit">
-</form>
-</p>
-<p>
-<textarea class="scrollabletextbox" name="result">Results will display here</textarea>
-</p>
+
+<br></br>
+<br></br>
+
+{% if res|length > 0 %}
+<h1> Simulation Results </h1>
+<table border=2>
+    <tr>
+      <th>
+        ID
+      </th>
+      <th>
+        Likely or Exp. Voters
+      </th>
+      <th>
+        Eligible Voters
+      </th>
+      <th>
+        Ballot Length Measure
+      </th>
+      <th>
+        {{ type }}
+      </th>
+    </tr>
+    {% for id in res %}
+    <tr>
+        <td>
+            {{ id }}
+        </td>
+        <td>
+            {{ inputs[id]['Likely or Exp. Voters'] }}
+        </td>
+        <td>
+            {{ inputs[id]['Eligible Voters'] }}
+        </td>
+        <td>
+            {{ inputs[id]['Ballot Length Measure'] }}
+        </td>
+        <td>
+            {{ res[id]['Resource'] }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    
+<style>
+    table, td, th { border : 1px solid black; }
+    th { padding : 13px; }
+    td { padding : 15px; }
+</style>
+{% endif %}
 {% endblock %}
+
+<br></br>
+<br></br>
