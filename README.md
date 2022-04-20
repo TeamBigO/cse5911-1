@@ -53,7 +53,7 @@ pip install -r requirements.txt
 
 # Usage
 
-To run program with UI, open main.py and run in VSCode environment. This will run the UI on http://127.0.0.1:5000/, where you can view it.
+To run program with UI, open main.py and run in VSCode environment. This will run the UI on a development server, http://127.0.0.1:5000/, where you can view it.
 
 To run apportionment in command line:
 ```
