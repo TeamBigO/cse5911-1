@@ -15,3 +15,4 @@ pytest-mock
 jit
 auto-py-to-exe
 matplotlib
+flask
