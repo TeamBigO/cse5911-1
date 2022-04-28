@@ -60,7 +60,8 @@ def allocation(location_data: dict, settings: dict, memo: dict = {}) -> dict:
     lower_service_req = 1
     current_total = 0
     num_iterations = 0
-
+    
+    
     while num_iterations < settings['MAX_ITERATIONS'] and \
             abs(settings['NUM_MACHINES'] - current_total) > settings['ACCEPTABLE_RESOURCE_MISS']:
         # next service req to try
@@ -68,8 +69,9 @@ def allocation(location_data: dict, settings: dict, memo: dict = {}) -> dict:
 
         # running apportionment on all locations
         logging.critical(f'allocation - running apportionment with service req: {settings["SERVICE_REQ"]:.2f}')
+        
         results = apportionment(location_data, settings, memo)
-
+        print(results) #Testing
         # collecting new total
         current_total = sum(res['Resource'] for res in results.values())
         logging.critical(f'allocation - used {current_total} machines at service req: {settings["SERVICE_REQ"]:.2f}')

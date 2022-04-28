@@ -86,6 +86,38 @@ def load_settings_from_sheet(options_sheet: Book):
 
 def default_settings():
     return {
+        #THESE are the old settings
+        # 'NUM_LOCATIONS': 5,
+
+        # 'POLL_START': 6.5,
+        # 'POLL_END': 19.5,
+        # 'POLL_OPEN': 19.5 - 6.5,
+
+        # 'MAX_MACHINES': 200,
+        # 'MIN_MACHINES': 1,
+
+        # 'SERVICE_REQ': 65.0,
+
+        # 'MIN_VOTING_MIN': 6,
+        # 'MIN_VOTING_MODE': 8,
+        # 'MIN_VOTING_MAX': 12,
+        # 'MIN_BALLOT': 0,
+
+        # 'MAX_VOTING_MIN': 6,
+        # 'MAX_VOTING_MODE': 10,
+        # 'MAX_VOTING_MAX': 20,
+        # 'MAX_BALLOT': 10,
+
+        # 'NUM_MACHINES': 5,
+        # 'MAX_ITERATIONS': 20,
+        # 'ACCEPTABLE_RESOURCE_MISS': 10,
+
+        # 'ALPHA_VALUE': 0.05,
+        # 'DELTA_INDIFFERENCE_ZONE': 0.5,
+        # 'INITIAL_SAMPLE_SIZE': 10,
+        # 'BATCH_SIZE': 2,
+        # 'NUM_REPLICATIONS': 10,
+        # 'NUM_BATCHES': 10 // 2
         'NUM_LOCATIONS': 5,
 
         'POLL_START': 6.5,
@@ -107,14 +139,14 @@ def default_settings():
         'MAX_VOTING_MAX': 20,
         'MAX_BALLOT': 10,
 
-        'NUM_MACHINES': 5,
-        'MAX_ITERATIONS': 20,
-        'ACCEPTABLE_RESOURCE_MISS': 10,
+        'NUM_MACHINES': 200,
+        'MAX_ITERATIONS': 5,
+        'ACCEPTABLE_RESOURCE_MISS': 20,
 
-        'ALPHA_VALUE': 0.05,
+        'ALPHA_VALUE': 0.5,
         'DELTA_INDIFFERENCE_ZONE': 0.5,
         'INITIAL_SAMPLE_SIZE': 10,
-        'BATCH_SIZE': 2,
-        'NUM_REPLICATIONS': 10,
+        'BATCH_SIZE': 5,
+        'NUM_REPLICATIONS': 20,
         'NUM_BATCHES': 10 // 2
     }
